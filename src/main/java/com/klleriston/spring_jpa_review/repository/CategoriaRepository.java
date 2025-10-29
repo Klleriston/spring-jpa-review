@@ -16,4 +16,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     List<Categoria> findByTitulosIn(List<String> titulos);
 
     List<Categoria> findAllOrderByTituloAsc();
+
+    List<Categoria> findByTituloIn(List<String> titulos);
 }

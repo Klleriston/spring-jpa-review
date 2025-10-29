@@ -21,9 +21,16 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public Categoria findByTitulo(String titulo) {
-        return categoriaRepository.findByTitulo(titulo).orElseGet(Categoria::new);
+    public Categoria findByTituloIn(String titulo) {
+        return categoriaRepository.findByTituloIn(titulo).orElseGet(Categoria::new);
     }
+
+    @Transactional(readOnly = true)
+    public Categoria findByTitulo(List<String> titulo) {
+        return categoriaRepository.findByTitulo(titulo)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada: " + titulo));
+    }
+
 
     @Transactional(readOnly = true)
     public Categoria findByInicioTitulo(String titulo) {
@@ -39,5 +46,4 @@ public class CategoriaService {
     public List<Categoria> findAllOrderByTituloAsc() {
         return categoriaRepository.findAllOrderByTituloAsc();
     }
-
 }

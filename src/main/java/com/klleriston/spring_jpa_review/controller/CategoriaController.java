@@ -22,7 +22,7 @@ public class CategoriaController {
 
     @GetMapping("titulo/{titulo}")
     public Categoria getByTitulo(@PathVariable String titulo){
-        return this.categoriaService.findByTitulo(titulo);
+        return this.categoriaService.findByTituloIn(titulo);
     }
 
     @GetMapping("titulo/inicio/{titulo}")
