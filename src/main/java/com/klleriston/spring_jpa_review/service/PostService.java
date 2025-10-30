@@ -4,6 +4,10 @@ import com.klleriston.spring_jpa_review.entity.Autor;
 import com.klleriston.spring_jpa_review.entity.Categoria;
 import com.klleriston.spring_jpa_review.entity.Post;
 import com.klleriston.spring_jpa_review.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,6 +64,17 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<Post> findAllBySemDataPublicacao() {
         return this.postRepository.findByDataPubicacaoIsNull();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Post> pageAllPagination(Pageable pageable) {
+        return this.postRepository.pageAllPagination(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Post> pageAllByAno(int ano, int page, int size, String sort, String direction) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(direction), sort);
+        return this.postRepository.findByAno(ano, pageable);
     }
 
 

@@ -2,10 +2,11 @@ package com.klleriston.spring_jpa_review.controller;
 
 import com.klleriston.spring_jpa_review.entity.Post;
 import com.klleriston.spring_jpa_review.service.PostService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.service.annotation.PostExchange;
 
 import java.time.LocalDate;
@@ -48,5 +49,19 @@ public class PostController {
     @GetMapping("sem-data-publicacao")
     public List<Post> getBySemDataPublicacao() {
         return this.postService.findAllBySemDataPublicacao();
+    }
+
+    @GetMapping("all")
+    public Page<Post> getAllPagination(@PageableDefault(page = 0, size = 10, sort = "dataPublicacao", direction = Sort.Direction.DESC) Pageable pageable) {
+        return this.postService.pageAllPagination(pageable);
+    }
+
+    @GetMapping("ano/{ano}")
+    public Page<Post> getAllPagination(@RequestParam(defaultValue = "0") int page,
+                                       @RequestParam(defaultValue = "5") int size,
+                                       @RequestParam(defaultValue = "dataPublicacao") String sort,
+                                       @RequestParam(defaultValue = "DESC") String dir,
+                                       @PathVariable int ano) {
+        return this.postService.pageAllByAno(ano, page, size, sort, dir);
     }
 }

@@ -1,8 +1,10 @@
 package com.klleriston.spring_jpa_review.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +24,18 @@ public class Autor implements Serializable {
     @OneToOne(cascade = {CascadeType.ALL, CascadeType.REMOVE})
     @JoinColumn(name = "id_info")
     private InfoAutor infoAutor;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "autor")
+    private List<Post> posts;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public InfoAutor getInfoAutor() {
         return infoAutor;
