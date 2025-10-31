@@ -1,13 +1,17 @@
 package com.klleriston.spring_jpa_review.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TB_ENDERECOS")
+@EntityListeners(AuditingEntityListener.class)
 public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +32,18 @@ public class Endereco implements Serializable {
 
     @Column(name = "numero")
     private Integer numero;
+
+    @CreatedBy
+    private String criadoPor;
+
+    @CreatedDate
+    private LocalDateTime dataCriacao;
+
+    @LastModifiedBy
+    private String modificadoPor;
+
+    @LastModifiedDate
+    private LocalDateTime dataModificacao;
 
     @Override
     public String toString() {

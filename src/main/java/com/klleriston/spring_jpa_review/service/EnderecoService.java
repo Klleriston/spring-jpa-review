@@ -6,12 +6,18 @@ import com.klleriston.spring_jpa_review.specification.EnderecoSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.reactive.TransactionalOperator;
 
 import java.util.List;
 
 @Service
 public class EnderecoService {
+    private final TransactionalOperator transactionalOperator;
     private EnderecoRepository enderecoRepository;
+
+    public EnderecoService(TransactionalOperator transactionalOperator) {
+        this.transactionalOperator = transactionalOperator;
+    }
 
     @Transactional
     public Endereco save(Endereco endereco) {
@@ -58,5 +64,14 @@ public class EnderecoService {
         return this.enderecoRepository.findAll(spec);
     }
 
+    @Transactional
+    public int updateEndereco(long id, String bairro, String logradouro, int numero) {
+        return this.enderecoRepository.updateByBairroAndLogradouroAndNumero(id, bairro, logradouro, numero);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Endereco> findByUf(String uf) {
+        return this.enderecoRepository.findEnderecoByUf(uf);
+    }
 
 }

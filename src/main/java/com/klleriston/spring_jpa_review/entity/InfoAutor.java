@@ -1,12 +1,19 @@
 package com.klleriston.spring_jpa_review.entity;
 
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TB_INFO_AUTORES")
+@EntityListeners(AuditingEntityListener.class)
 public class InfoAutor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +25,50 @@ public class InfoAutor implements Serializable {
 
     @Column(name = "bio", length = 255, nullable = true)
     private String bio;
+
+    @CreatedBy
+    private String criadoPor;
+
+    @CreatedDate
+    private LocalDateTime dataCriacao;
+
+    @LastModifiedBy
+    private String modificadoPor;
+
+    @LastModifiedDate
+    private LocalDateTime dataModificacao;
+
+    public String getCriadoPor() {
+        return criadoPor;
+    }
+
+    public void setCriadoPor(String criadoPor) {
+        this.criadoPor = criadoPor;
+    }
+
+    public String getModificadoPor() {
+        return modificadoPor;
+    }
+
+    public void setModificadoPor(String modificadoPor) {
+        this.modificadoPor = modificadoPor;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public LocalDateTime getDataModificacao() {
+        return dataModificacao;
+    }
+
+    public void setDataModificacao(LocalDateTime dataModificacao) {
+        this.dataModificacao = dataModificacao;
+    }
 
     public Long getId() {
         return id;

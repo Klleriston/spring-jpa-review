@@ -40,4 +40,14 @@ public class EnderecoController {
     public List<Endereco> getByAutoresTotal(@RequestParam long total, @RequestParam List<String> cidades) {
         return this.enderecoService.findByAutorTotalDePostsAndCidade(total, cidades);
     }
+
+    @GetMapping("{id}/novo-endereco")
+    public String updateEndereco(@RequestParam Long id, @RequestParam String bairro, @RequestParam String logradouro, @RequestParam int numero) {
+        return this.enderecoService.updateEndereco(id, bairro, logradouro, numero) == 1 ? "Endereço alterado" : "Endereço nao alterado";
+    }
+
+    @GetMapping("uf/{uf}")
+    public List<Endereco> getUfs(@RequestParam String uf) {
+        return this.enderecoService.findByUf(uf);
+    }
 }

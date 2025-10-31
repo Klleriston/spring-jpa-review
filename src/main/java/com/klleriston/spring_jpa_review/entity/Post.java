@@ -2,14 +2,21 @@ package com.klleriston.spring_jpa_review.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TB_POST")
+@EntityListeners(AuditingEntityListener.class)
 public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +37,50 @@ public class Post implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_publicacao")
     private LocalDate dataPublicacao;
+
+    @CreatedBy
+    private String criadoPor;
+
+    @CreatedDate
+    private LocalDateTime dataCriacao;
+
+    @LastModifiedBy
+    private String modificadoPor;
+
+    @LastModifiedDate
+    private LocalDateTime dataModificacao;
+
+    public String getCriadoPor() {
+        return criadoPor;
+    }
+
+    public void setCriadoPor(String criadoPor) {
+        this.criadoPor = criadoPor;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public String getModificadoPor() {
+        return modificadoPor;
+    }
+
+    public void setModificadoPor(String modificadoPor) {
+        this.modificadoPor = modificadoPor;
+    }
+
+    public LocalDateTime getDataModificacao() {
+        return dataModificacao;
+    }
+
+    public void setDataModificacao(LocalDateTime dataModificacao) {
+        this.dataModificacao = dataModificacao;
+    }
 
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
